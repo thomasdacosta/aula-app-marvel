@@ -4,7 +4,7 @@
 Aplicativo para exibir os personagens da Marvel acessando a API Oficial da Marvel, desenvolvido em React Native.
 
 ## Link dos exemplos no Expo
--[] -
+- [app-marvel] - https://snack.expo.dev/@thomasdacostaprof/app-marvel
 
 ## Configurando o Ambiente
 
