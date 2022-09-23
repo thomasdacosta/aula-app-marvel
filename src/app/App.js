@@ -8,11 +8,12 @@ import {
   Button,
   ActivityIndicator,
 } from "react-native";
+
 import Estilos from "../estilos/Estilos";
 import PersonagemItem from "../componentes/PersonagemItem";
-// import BuscarPersonagem from "../componentes/BuscarPersonagem";
+import MarvelApiClient from "../componentes/MarvelApiClient";
 
-const App = () => {
+export default () => {
   const PERSONAGEM_DEFAULT = "thor";
 
   const [jsonData, setJsonData] = useState("");
@@ -26,45 +27,16 @@ const App = () => {
     "&hash=0ea6be79e04ac1b0400d65ffc11088f9" +
     "&nameStartsWith=" + personagem + "&orderBy=name&limit=100";
 
-  const JSON_RETORNO_VAZIO = [
-    {
-      "id": 1,
-      "name": "Nenhum personagem encontrado. \nVamos ficar com Cap nos nossos corações.",
-      "description": "Eu também gosto dele :)",
-      "modified": "2020-04-04T19:01:59-0400",
-      "thumbnail": {
-        "path": "http://i.annihil.us/u/prod/marvel/i/mg/3/50/537ba56d31087",
-        "extension": "jpg",
-      },
-    },
-  ];
-
   const ExibirBusca = (json, total) => {
     setJsonData(json);
     setTotalPersonagens(total);
-  };
-
-  const MarvelApiClient = async (exibir) => {
-    await fetch(URL, {
-      method: "GET",
-    }).then((response) => {
-      if (response.status === 200) {
-        response.json().then((result) => {
-          if (result.data.results.length === 0)
-            exibir(JSON_RETORNO_VAZIO, 0);
-          else
-            exibir(result.data.results, result.data.results.length);
-        });
-      } else
-        exibir(JSON_RETORNO_VAZIO, 0);
-    }).catch(() => exibir(JSON_RETORNO_VAZIO, 0));
   };
 
   const BuscarPersonagem = () => {
     setTotalPersonagens(0);
     setJsonData(null);
     setActivity(true);
-    MarvelApiClient(ExibirBusca).then(() => {});
+    MarvelApiClient(URL, ExibirBusca).then(() => {});
     setActivity(false);
   };
 
@@ -101,5 +73,3 @@ const App = () => {
     </SafeAreaView>
   );
 };
-
-export default App;
