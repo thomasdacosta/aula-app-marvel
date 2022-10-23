@@ -30,8 +30,8 @@ export default StyleSheet.create({
     fontSize: 15,
     height: 40,
     width: 350,
-    marginHorizontal:20,
-    paddingHorizontal:10,
+    marginHorizontal: 20,
+    paddingHorizontal: 10,
     alignSelf: 'center',
     borderColor: 'black',
     borderWidth: 2,
@@ -52,6 +52,41 @@ export default StyleSheet.create({
     width: 200,
     height: 350,
     alignSelf: 'center',
-  }
+  },
+  centeredView: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    marginTop: 22
+  },
+  modalView: {
+    margin: 20,
+    backgroundColor: "white",
+    borderRadius: 15,
+    padding: 35,
+    alignItems: "center",
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 2
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 4,
+    elevation: 5
+  },
+  modalTextTitle: {
+    fontSize: 15,
+    fontWeight: 'bold',
+    marginBottom: 15,
+    textAlign: "center"
+  },
+  modalText: {
+    marginBottom: 15,
+    textAlign: "justify"
+  },
+  logo: {
+    width: 250,
+    height: 100,
+    alignSelf: 'center'
+  },
 });
-
