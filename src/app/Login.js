@@ -8,7 +8,7 @@ import Hq from "./Hq";
 import Series from "./Series";
 import Historia from "./Historia";
 import Eventos from "./Eventos";
-import ValidateLogin, { EMAIL, MENSAGEM_EMAIL, MENSAGEM_SENHA, SENHA } from "../js/LoginService";
+import ValidarLogin, { EMAIL, MENSAGEM_EMAIL, MENSAGEM_SENHA, SENHA } from "../js/LoginService";
 import Estilos from "../estilos/Estilos";
 
 const Stack = createNativeStackNavigator();
@@ -19,6 +19,15 @@ const TelaLogin = ({ navigation }) => {
   const [activity, setActivity] = useState(false);
   const [modalVisible, setModalVisible] = useState(false);
   const [description, setDescription] = useState("");
+
+  let parametros = {
+    user: user,
+    password: password,
+    navigation: navigation,
+    activity: setActivity,
+    modalVisible: setModalVisible,
+    description: setDescription
+  };
 
   return (
     <SafeAreaView style={Estilos.safeAreaView}>
@@ -59,7 +68,9 @@ const TelaLogin = ({ navigation }) => {
       />
       <View style={Estilos.button}>
         <Button title="Login"
-                onPress={() => ValidateLogin(user, password, navigation, setActivity, setModalVisible, setDescription)} />
+                onPress={() => {
+                  ValidarLogin(parametros);
+                }} />
       </View>
       <View style={{ marginTop: 10 }}>
         <ActivityIndicator size="large" color="#00ff00" animating={activity} />

@@ -48,22 +48,19 @@ const App = ({ navigation }) => {
     //console.warn("Acionado somente quando o total de personagens é atualizado");
   }, [totalPersonagens]);
 
-  const Personagem = ({ item, evento, link }) => (<View>
-    <Pressable onPress={evento}>
-      <View style={{flexDirection: 'row', alignItems: 'center'}}>
-        <View style={{flex: 1, height: 1, backgroundColor: 'white'}} />
-        <View>
-          <Text style={Estilos.personagemParagraph}>{item.name}</Text>
-        </View>
-        <View style={{flex: 1, height: 1, backgroundColor: 'white'}} />
-      </View>
-      <Image
-        style={Estilos.imagemPersonagem}
-        source={{
-          uri: link,
-        }}
-      />
-    </Pressable>
+  const Personagem = ({ item, evento, link }) => (
+    <View>
+      <Pressable onPress={evento}>
+        <View style={Estilos.linha} />
+        <Text style={Estilos.personagemParagraph}>{item.name}</Text>
+        <Image
+          style={Estilos.imagemPersonagem}
+          source={{
+            uri: link,
+          }}
+        />
+        <View><Text></Text></View>
+      </Pressable>
   </View>);
 
   const PersonagemItem = ({ item }) => (<Personagem

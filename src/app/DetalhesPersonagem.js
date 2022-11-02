@@ -1,9 +1,14 @@
 import React from "react";
-import { Button, Image, Linking, Modal, Pressable, SafeAreaView, ScrollView, Text, View } from "react-native";
+import { Button, Image, Linking, Pressable, SafeAreaView, ScrollView, Text, View } from "react-native";
 import Estilos from "../estilos/Estilos";
 
 const App = ({ route, navigation }) => {
   const { item } = route.params;
+
+  let data = new Date(Date.parse(item?.modified));
+  let dataFormatada = new Intl.DateTimeFormat('pt-BR',
+    { year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit', second: '2-digit' })
+    .format(data);
 
   const ListUrls = ({ item }) => {
     return (
@@ -19,13 +24,14 @@ const App = ({ route, navigation }) => {
               else if (tipo === "comiclink")
                 tipo = "HQ´s Site"
 
-              let a = index;
               return (
                 <View key={index}>
+                  <View style={Estilos.linha} />
                   <Text style={Estilos.detalheDescricaoPersonagemAmarelo}>{tipo}</Text>
                   <Pressable onPress={() => Linking.openURL(e.url)}>
                     <Text style={Estilos.linkPersonagem}>{e.url}</Text>
                   </Pressable>
+                  <View><Text></Text></View>
                 </View>
               );
             }
@@ -53,37 +59,40 @@ const App = ({ route, navigation }) => {
         />
         <View><Text></Text></View>
         <View style={Estilos.alignVertical}>
-          <Button style={Estilos.button} title="HQ´s" onPress={() => {
+          <Button style={Estilos.button} title="Histórias em Quadrinhos" onPress={() => {
             navigation.navigate("HQ", {
               item: item,
             });
           }} disabled={item.comics.items.length <= 0} />
-          <View style={{ flex: 0.1 }} />
-          <Button style={Estilos.button} title="Series" onPress={() => {
-            navigation.navigate("Series", {
-              item: item,
-            });
-          }} disabled={item.series.items.length <= 0} />
-          <View style={{ flex: 0.1 }} />
-          <Button style={Estilos.button} title="História" onPress={() => {
-            navigation.navigate("Historia", {
-              item: item,
-            });
-          }} disabled={item.stories.items.length <= 0} />
-          <View style={{ flex: 0.1 }} />
-          <Button style={Estilos.button} title="Eventos" onPress={() => {
-            navigation.navigate("Eventos", {
-              item: item,
-            });
-          }} disabled={item.events.items.length <= 0} />
+          {/*<View style={{ flex: 0.1 }} />*/}
+          {/*<Button style={Estilos.button} title="Series" onPress={() => {*/}
+          {/*  navigation.navigate("Series", {*/}
+          {/*    item: item,*/}
+          {/*  });*/}
+          {/*}} disabled={item.series.items.length <= 0} />*/}
+          {/*<View style={{ flex: 0.1 }} />*/}
+          {/*<Button style={Estilos.button} title="História" onPress={() => {*/}
+          {/*  navigation.navigate("Historia", {*/}
+          {/*    item: item,*/}
+          {/*  });*/}
+          {/*}} disabled={item.stories.items.length <= 0} />*/}
+          {/*<View style={{ flex: 0.1 }} />*/}
+          {/*<Button style={Estilos.button} title="Eventos" onPress={() => {*/}
+          {/*  navigation.navigate("Eventos", {*/}
+          {/*    item: item,*/}
+          {/*  });*/}
+          {/*}} disabled={item.events.items.length <= 0} />*/}
         </View>
-
+        <View><Text></Text></View>
+        <View style={Estilos.linha} />
         <Text
           style={Estilos.detalheDescricaoPersonagemAmarelo}>Descrição: </Text>
         <Text
           style={Estilos.detalheDescricaoPersonagem}>{item?.description === "" ? "Personagem sem descrição" : item?.description}</Text>
+        <View><Text></Text></View>
+        <View style={Estilos.linha} />
         <Text style={Estilos.detalheDescricaoPersonagemAmarelo}>Data de Modificação:</Text>
-        <Text style={Estilos.detalheDescricaoPersonagem}>{item?.modified + "\r\n"}</Text>
+        <Text style={Estilos.detalheDescricaoPersonagem}>{dataFormatada + "\r\n"}</Text>
         <View style={{ flex: 0.1 }} />
         <ListUrls item={item} />
       </ScrollView>

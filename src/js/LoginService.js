@@ -8,29 +8,30 @@ const ShowModal = (description, setModalVisible, setDescription) => {
   setDescription(description);
 };
 
-const ValidarCampos = (email, senha, setModalVisible, setDescription) => {
-  if (email.trim().length === 0) {
-    ShowModal(MENSAGEM_EMAIL, setModalVisible, setDescription);
+const ValidarCampos = (parametros) => {
+  if (parametros.user.trim().length === 0) {
+    ShowModal(MENSAGEM_EMAIL, parametros.modalVisible, parametros.description);
     return false;
   }
 
-  if (senha.trim().length === 0) {
-    ShowModal(MENSAGEM_SENHA, setModalVisible, setDescription);
+  if (parametros.password.trim().length === 0) {
+    ShowModal(MENSAGEM_SENHA, parametros.modalVisible, parametros.description);
     return false;
   }
 
   return true;
 }
 
-export default async (email, senha, navigation, setActivity, setModalVisible, setDescription) => {
-  if (!ValidarCampos(email, senha, setModalVisible, setDescription)) {
+export default async (parametros) => {
+  if (!ValidarCampos(parametros)) {
     return;
   }
 
-  setActivity(true);
+  parametros.activity(true);
 
   let usuario = {
-    "email": email, "password": senha,
+    email: parametros.user,
+    password: parametros.password
   };
 
   await fetch("https://reqres.in/api/login", {
@@ -40,15 +41,15 @@ export default async (email, senha, navigation, setActivity, setModalVisible, se
   }).then(response => {
     if (response.status === 200) {
       response.text().then(function() {
-        navigation.navigate("Personagem");
+        parametros.navigation.navigate("Personagem");
       });
     } else {
-      ShowModal(`Usuário ou senha inválidos => código: ${response.status}`, setModalVisible, setDescription);
+      ShowModal(`Usuário ou senha inválidos => código: ${response.status}`, parametros.modalVisible, parametros.description);
     }
-    setActivity(false);
+    parametros.activity(false);
   }).catch((e) => {
-    ShowModal("Não foi possivel executar o login =>" + e, setModalVisible, setDescription);
-    setActivity(false);
+    ShowModal("Não foi possivel executar o login =>" + e, parametros.modalVisible, parametros.description);
+    parametros.activity(false);
   });
 
 }

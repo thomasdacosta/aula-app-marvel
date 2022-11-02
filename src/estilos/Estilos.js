@@ -15,7 +15,8 @@ export default StyleSheet.create({
     color: 'white',
     fontWeight: 'bold',
     textAlign: 'center',
-    backgroundColor: '#191970',
+    backgroundColor: '#000000',
+    // backgroundColor: '#191970',
   },
   personagem: {
     color: 'white',
@@ -126,5 +127,10 @@ export default StyleSheet.create({
   alignVertical: {
     flexDirection:"row",
     alignSelf: "center"
+  },
+  linha: {
+    flex: 1,
+    height: 1,
+    backgroundColor: 'white'
   }
 });

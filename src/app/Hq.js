@@ -1,16 +1,15 @@
 import {
   ActivityIndicator,
-  Button,
   FlatList,
   Image,
   Pressable,
   SafeAreaView,
-  ScrollView,
   Text,
   View,
 } from "react-native";
 import Estilos from "../estilos/Estilos";
 import React, { useEffect, useState } from "react";
+import MarvelApiClient from "../js/HqService";
 
 const App = ({ route, navigation }) => {
   const { item } = route.params;
@@ -19,65 +18,31 @@ const App = ({ route, navigation }) => {
   const [totalHq, setTotalHq] = useState(0);
   const [totalGeralHq, setTotalGeralHq] = useState(0);
 
-  const URL = "http://gateway.marvel.com/v1/public/characters/" + item.id + "/comics" +
-    "?ts=1" +
-    "&apikey=f59dbe01285f1d360542b5c47a9516e3" +
-    "&hash=0ea6be79e04ac1b0400d65ffc11088f9" +
-    "&limit=100" +
-    "&orderBy=-onsaleDate";
-
-  const MarvelApiClient = async (url, exibir) => {
-    await fetch(url, {
-      method: "GET",
-    }).then((response) => {
-      if (response.status === 200) {
-        response.json().then((result) => {
-          if (result.data.results.length === 0) {
-            setTotalHq(0);
-            setTotalGeralHq(0);
-            exibir("{}", 0);
-          } else {
-            setTotalHq(result.data.results.length);
-            setTotalGeralHq(result.data.total);
-            exibir(result.data.results, result.data.results.length);
-          }
-        });
-      } else {
-        exibir("{}", 0);
-      }
-      setActivity(false);
-    }).catch(() => {
-      exibir("{}", 0);
-      setActivity(false);
-    });
-  };
-
-  const ExibirBusca = (json, total) => {
-    setJsonData(json);
+  let parametros = {
+    item: item,
+    totalHq: setTotalHq,
+    totalGeralHq: setTotalGeralHq,
+    activity: setActivity,
+    jsonData: setJsonData,
   };
 
   useEffect(() => {
     setActivity(true);
-    MarvelApiClient(URL, ExibirBusca).then(() => {
-    });
+    MarvelApiClient(parametros).then(() => {});
   }, []);
 
   const Hq = ({ item, evento, link }) => (
     <View>
       <Pressable onPress={evento}>
-        <View style={{flexDirection: 'row', alignItems: 'center'}}>
-          <View style={{flex: 1, height: 1, backgroundColor: 'white'}} />
-          <View>
-            <Text style={Estilos.personagemParagraph}>{item.title}</Text>
-          </View>
-          <View style={{flex: 1, height: 1, backgroundColor: 'white'}} />
-        </View>
+        <View style={Estilos.linha} />
+        <Text style={Estilos.personagemParagraph}>{item.title}</Text>
         <Image
           style={Estilos.imagemPersonagem}
           source={{
             uri: link,
           }}
         />
+        <View><Text></Text></View>
       </Pressable>
     </View>
   );
