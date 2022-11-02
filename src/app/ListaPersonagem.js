@@ -1,168 +1,120 @@
-import React, {useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 import {
-  SafeAreaView,
-  Text,
-  TextInput,
-  View,
-  FlatList,
-  Button,
-  ActivityIndicator, Pressable, Image, StyleSheet, BackHandler, Modal,
+  SafeAreaView, Text, TextInput, View, FlatList, Button, ActivityIndicator, Pressable, Image, BackHandler, Modal
 } from "react-native";
-import Estilos from '../estilos/Estilos';
+import Estilos from "../estilos/Estilos";
+import DetalhesPersonagem from "./DetalhesPersonagem";
+import BuscarPersonagem, { PERSONAGEM_DEFAULT } from "../js/ListaPersonagemService";
 
-const App = () => {
-  const PERSONAGEM_DEFAULT = "wolverine";
-
+const App = ({ navigation }) => {
   const [jsonData, setJsonData] = useState("");
   const [personagem, setPersonagem] = useState(PERSONAGEM_DEFAULT);
   const [activity, setActivity] = useState(false);
   const [totalPersonagens, setTotalPersonagens] = useState(0);
+  const [totalGeralPersonagens, setTotalGeralPersonagens] = useState(0);
   const [modalVisible, setModalVisible] = useState(false);
-  const [description, setDescription] = useState("");
-  const [name, setName] = useState("");
-
-  const URL = "http://gateway.marvel.com/v1/public/" +
-    "characters?ts=1" +
-    "&apikey=f59dbe01285f1d360542b5c47a9516e3" +
-    "&hash=0ea6be79e04ac1b0400d65ffc11088f9" +
-    "&nameStartsWith=" + personagem + "&orderBy=name&limit=100";
-
-  const JSON_RETORNO_VAZIO = [
-    {
-      "id": 1,
-      "name": "Nenhum personagem encontrado. \nVamos ficar com Cap nos nossos corações.",
-      "description": "Eu também gosto dele :)",
-      "modified": "2020-04-04T19:01:59-0400",
-      "thumbnail": {
-        "path": "http://i.annihil.us/u/prod/marvel/i/mg/3/50/537ba56d31087",
-        "extension": "jpg",
-      },
-    },
-  ];
-
-  const MarvelApiClient = async (url, exibir) => {
-    await fetch(url, {
-      method: "GET",
-    }).then((response) => {
-      if (response.status === 200) {
-        response.json().then((result) => {
-          if (result.data.results.length === 0)
-            exibir(JSON_RETORNO_VAZIO, 0);
-          else
-            exibir(result.data.results, result.data.results.length);
-        });
-      } else
-        exibir(JSON_RETORNO_VAZIO, 0);
-    }).catch(() => exibir(JSON_RETORNO_VAZIO, 0));
-  };
-
-  const ExibirBusca = (json, total) => {
-    setJsonData(json);
-    setTotalPersonagens(total);
-  };
-
-  const BuscarPersonagem = () => {
-    setTotalPersonagens(0);
-    setJsonData(null);
-    setActivity(true);
-    MarvelApiClient(URL, ExibirBusca).then(() => {});
-    setActivity(false);
-  };
+  const [item, setItem] = useState(null);
 
   // Evento é executado somente quando a tela é carregada
   useEffect(() => {
-    console.warn("Evento é executado somente quando a tela é carregada");
+    //console.warn("Evento é executado somente quando a tela é carregada");
     setPersonagem(PERSONAGEM_DEFAULT);
-    BuscarPersonagem();
+    BuscarPersonagem(personagem, setTotalPersonagens, setJsonData, setActivity);
   }, []);
 
   // Evento é executado somente quando a tela é carregada
   useEffect(() => {
-    const backHandler = BackHandler.addEventListener(
-      "hardwareBackPress",
-      () => true
-    );
+    const backHandler = BackHandler.addEventListener("hardwareBackPress", () => true);
     return () => backHandler.remove();
   }, []);
 
   // Sempre acionado quando a tela é renderizada
   useEffect(() => {
-    console.warn("Sempre acionado quando a tela é renderizada");
+    //console.warn("Sempre acionado quando a tela é renderizada");
   });
 
   // Acionado somente quando o total de personagens é atualizado
   useEffect(() => {
-    console.warn("Acionado somente quando o total de personagens é atualizado");
+    //console.warn("Acionado somente quando o total de personagens é atualizado");
   }, [totalPersonagens]);
 
-  const Personagem = ({item, evento, link}) => (
-    <View>
-      <Pressable onPress={evento}>
-        <Image
-          style={Estilos.imagemPersonagem}
-          source={{
-            uri: link,
-          }}
-        />
-        <Text style={Estilos.paragraph}>{item.name}</Text>
-      </Pressable>
-    </View>
-  );
+  const Personagem = ({ item, evento, link }) => (<View>
+    <Pressable onPress={evento}>
+      <View style={{flexDirection: 'row', alignItems: 'center'}}>
+        <View style={{flex: 1, height: 1, backgroundColor: 'white'}} />
+        <View>
+          <Text style={Estilos.personagemParagraph}>{item.name}</Text>
+        </View>
+        <View style={{flex: 1, height: 1, backgroundColor: 'white'}} />
+      </View>
+      <Image
+        style={Estilos.imagemPersonagem}
+        source={{
+          uri: link,
+        }}
+      />
+    </Pressable>
+  </View>);
 
-  const PersonagemItem = ({item}) => (
-    <Personagem
-      item={item}
-      evento={() => {
-        setName(item.name);
-        setDescription(item.description === "" ? "Personagem sem descrição" : item.description);
-        setModalVisible(true);
-      }}
-      link={item.thumbnail.path + "/portrait_uncanny.jpg"}/>
-  );
+  const PersonagemItem = ({ item }) => (<Personagem
+    item={item}
+    evento={() => {
+      setItem(item);
+      setModalVisible(true);
+    }}
+    link={item.thumbnail.path + "/portrait_uncanny.jpg"} />);
 
-  return (
-    <SafeAreaView style={Estilos.container}>
-      <Modal
-        animationType="slide"
-        transparent={true}
-        visible={modalVisible}>
-        <View style={Estilos.centeredView}>
-          <View style={Estilos.modalView}>
-            <Text style={Estilos.modalTextTitle}>{name}</Text>
-            <Text style={Estilos.modalText}>{description}</Text>
-            <View style={Estilos.button}>
-              <Button onPress={() => setModalVisible(!modalVisible)} title="Fechar"/>
-            </View>
+  return (<SafeAreaView style={Estilos.safeAreaView}>
+    <Modal
+      animationType="slide"
+      transparent={true}
+      visible={modalVisible}>
+      <View style={Estilos.centeredView}>
+        <View style={Estilos.modalView}>
+          <Text style={Estilos.modalTextTitle}>{item?.name}</Text>
+          <Text
+            style={Estilos.modalText}>{item?.description === "" ? "Personagem sem descrição" : item?.description}</Text>
+          <View style={Estilos.alignVertical}>
+            <Button style={Estilos.button} onPress={() => {
+              setModalVisible(!modalVisible);
+              navigation.navigate("DetalhesPersonagem", {
+                item: item,
+              });
+            }} title="Detalhes" />
+            <View style={{ flex: 0.1 }} />
+            <Button onPress={() => setModalVisible(!modalVisible)} title="Fechar" />
           </View>
         </View>
-      </Modal>
-      <Text style={Estilos.personagem}></Text>
-      <Text style={Estilos.personagem}>Pesquisar Personagem:</Text>
-      <TextInput
-        autoCorrect={false}
-        style={Estilos.textInput}
-        clearButtonMode="always"
-        placeholder={"Ex: " + PERSONAGEM_DEFAULT}
-        onChangeText={(value) => setPersonagem(value)}
-        onEndEditing={e => BuscarPersonagem()}
-      />
-      <View style={Estilos.button}>
-        <Button title="Pesquisar" onPress={() => {
-          BuscarPersonagem()
-        }}/>
       </View>
-      <View style={{marginTop: 10}}>
-        <ActivityIndicator size="large" animating={activity}/>
-      </View>
-      <Text style={Estilos.personagem}>{totalPersonagens} Personagens Encontrados</Text>
-      <FlatList
-        style={{marginTop: 10}}
-        data={jsonData}
-        renderItem={PersonagemItem}
-        keyExtractor={item => item.id}
-      />
-    </SafeAreaView>
-  );
+    </Modal>
+    <View style={Estilos.alignVertical}>
+      <View style={{ flex: 0.1 }} />
+      <Text style={Estilos.detalhePersonagem}>Buscar Personagem</Text>
+    </View>
+    <TextInput
+      autoCorrect={false}
+      style={Estilos.textInput}
+      clearButtonMode="always"
+      placeholder={"Ex: " + PERSONAGEM_DEFAULT}
+      onChangeText={(value) => setPersonagem(value)}
+      onEndEditing={() => BuscarPersonagem(personagem, setTotalPersonagens, setJsonData, setActivity)}
+    />
+    <View style={Estilos.button}>
+      <Button title="Pesquisar" onPress={() => {
+        BuscarPersonagem(personagem, setTotalPersonagens, setJsonData, setActivity);
+      }} />
+    </View>
+    <View style={{ marginTop: 10 }}>
+      <ActivityIndicator size="large" animating={activity} />
+    </View>
+    <Text style={Estilos.personagem}>{totalPersonagens} de {totalGeralPersonagens} Personagens Encontrados</Text>
+    <FlatList
+      style={{ marginTop: 10 }}
+      data={jsonData}
+      renderItem={PersonagemItem}
+      keyExtractor={item => item.id}
+    />
+  </SafeAreaView>);
 
 };
 

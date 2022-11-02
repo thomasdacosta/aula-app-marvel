@@ -1,13 +1,13 @@
 import { StyleSheet } from "react-native";
 
 export default StyleSheet.create({
-  container: {
+  safeAreaView: {
     flex: 1,
     justifyContent: 'center',
     backgroundColor: '#191970',
     padding: 20,
   },
-  paragraph: {
+  personagemParagraph: {
     margin: 12,
     padding: 10,
     fontSize: 20,
@@ -46,7 +46,7 @@ export default StyleSheet.create({
     marginTop: 20,
     marginHorizontal: 20,
     textAlign: 'center',
-    alignSelf: 'center'
+    alignSelf: 'center',
   },
   imagemPersonagem: {
     width: 200,
@@ -89,4 +89,41 @@ export default StyleSheet.create({
     height: 100,
     alignSelf: 'center'
   },
+  escudoLogo: {
+    width: 50,
+    height: 50,
+    alignSelf: 'center'
+  },
+  detalhePersonagem: {
+    color: 'white',
+    marginTop: 10,
+    fontSize: 30,
+    fontWeight: 'bold',
+    textAlign: 'center',
+  },
+  detalheDescricaoPersonagem: {
+    color: 'white',
+    marginTop: 10,
+    fontSize: 15,
+    fontWeight: 'bold',
+    textAlign: 'justify',
+  },
+  detalheDescricaoPersonagemAmarelo: {
+    color: 'yellow',
+    marginTop: 10,
+    fontSize: 15,
+    fontWeight: 'bold',
+    textAlign: 'justify',
+  },
+  linkPersonagem: {
+    color: '#66ccff',
+    marginTop: 10,
+    fontSize: 15,
+    fontWeight: 'bold',
+    textAlign: 'justify',
+  },
+  alignVertical: {
+    flexDirection:"row",
+    alignSelf: "center"
+  }
 });

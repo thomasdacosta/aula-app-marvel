@@ -1,71 +1,27 @@
-import React, {useState} from 'react';
-import { Text, View, StyleSheet, TextInput, ActivityIndicator, Button, Image, SafeAreaView, Modal } from "react-native";
-import { NavigationContainer } from '@react-navigation/native';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import ListaPersonagem from './ListaPersonagem';
-import Estilos from '../estilos/Estilos';
+import React, { useState } from "react";
+import { Text, View, TextInput, ActivityIndicator, Button, Image, SafeAreaView, Modal } from "react-native";
+import { NavigationContainer } from "@react-navigation/native";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import ListaPersonagem from "./ListaPersonagem";
+import DetalhesPersonagem from "./DetalhesPersonagem";
+import Hq from "./Hq";
+import Series from "./Series";
+import Historia from "./Historia";
+import Eventos from "./Eventos";
+import ValidateLogin, { EMAIL, MENSAGEM_EMAIL, MENSAGEM_SENHA, SENHA } from "../js/LoginService";
+import Estilos from "../estilos/Estilos";
 
-const MENSAGEM_EMAIL = "Digite o seu e-mail.";
-const MENSAGEM_SENHA = "Digite a sua senha.";
-const EMAIL = "eve.holt@reqres.in";
-const SENHA = "cityslicka";
 const Stack = createNativeStackNavigator();
 
 const TelaLogin = ({ navigation }) => {
-  const [user, setUser] = useState('eve.holt@reqres.in');
-  const [password, setPassword] = useState('cityslicka');
-  const [status, setStatus] = useState('');
+  const [user, setUser] = useState(EMAIL);
+  const [password, setPassword] = useState(SENHA);
   const [activity, setActivity] = useState(false);
   const [modalVisible, setModalVisible] = useState(false);
   const [description, setDescription] = useState("");
 
-  const ShowModal = (description) => {
-      setModalVisible(true);
-      setDescription(description);
-  };
-
-  const ValidateLogin = async (email, senha, navigation) => {
-    if (email.trim().length === 0) {
-      ShowModal(MENSAGEM_EMAIL);
-      return;
-    }
-
-    if (senha.trim().length === 0) {
-      ShowModal(MENSAGEM_SENHA);
-      return;
-    }
-
-    setActivity(true);
-
-    let usuario = {
-      "email": email,
-      "password": senha
-    };
-
-    await fetch('https://reqres.in/api/login', {
-      method: "POST",
-      headers: {
-        Accept: "application/json",
-        'Content-Type': "application/json"
-      },
-      body: JSON.stringify(usuario)
-    }).then(response => {
-      if (response.status === 200) {
-        response.text().then(function () {
-          navigation.navigate("Personagem");
-        });
-      } else {
-        ShowModal(`Usuário ou senha inválidos => código: ${response.status}`);
-      }
-      setActivity(false);
-    }).catch((e) => {
-      ShowModal("Não foi possivel executar o login =>" + e);
-      setActivity(false);
-    });
-  }
-
   return (
-    <SafeAreaView style={Estilos.container}>
+    <SafeAreaView style={Estilos.safeAreaView}>
       <Modal
         animationType="slide"
         transparent={true}
@@ -74,12 +30,12 @@ const TelaLogin = ({ navigation }) => {
           <View style={Estilos.modalView}>
             <Text style={Estilos.modalText}>{description}</Text>
             <View style={Estilos.button}>
-              <Button onPress={() => setModalVisible(!modalVisible)} title="Fechar"/>
+              <Button onPress={() => setModalVisible(!modalVisible)} title="Fechar" />
             </View>
           </View>
         </View>
       </Modal>
-      <Image style={Estilos.logo} source={require('../../marvelLogo.png')} />
+      <Image style={Estilos.logo} source={require("../imagens/marvelLogo.png")} />
       <Text style={Estilos.personagem}>E-mail:</Text>
       <TextInput
         autoCorrect={false}
@@ -102,35 +58,44 @@ const TelaLogin = ({ navigation }) => {
         onChangeText={(value) => setPassword(value)}
       />
       <View style={Estilos.button}>
-        <Button title="Login" onPress={() => ValidateLogin(user, password, navigation)}/>
+        <Button title="Login"
+                onPress={() => ValidateLogin(user, password, navigation, setActivity, setModalVisible, setDescription)} />
       </View>
-      <View style={{marginTop: 10}}>
-        <ActivityIndicator size="large" animating={activity}/>
+      <View style={{ marginTop: 10 }}>
+        <ActivityIndicator size="large" animating={activity} />
       </View>
-      <Text style={Estilos.personagem}>{status}</Text>
     </SafeAreaView>
-  )
-}
+  );
+};
 
 const Login = () => {
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="Login" screenOptions={{
-        headerStyle: {
-          backgroundColor: '#FF0000',
-        },
-        headerTintColor: '#fff',
-      }}>
-        <Stack.Screen name="Login" component={TelaLogin} options={{ title: 'Marvel Login - Login' }} />
+      <Stack.Navigator initialRouteName="Login" screenOptions={
+        {
+          headerStyle: {
+            backgroundColor: "#FF0000",
+          },
+          headerTintColor: "#fff",
+        }
+      }>
+        <Stack.Screen name="Login" component={TelaLogin} options={{ title: "Marvel App - Login" }} />
         <Stack.Screen name="Personagem" component={ListaPersonagem} options={
           {
-            title: 'Marvel Login - Personagens',
-            headerBackVisible: false }
+            title: "Marvel Login - Personagens",
+            headerBackVisible: false,
+          }
         }
         />
+        <Stack.Screen name="DetalhesPersonagem" component={DetalhesPersonagem}
+                      options={{ title: "Marvel App - Detalhes" }} />
+        <Stack.Screen name="HQ" component={Hq} options={{ title: "Marvel App - HQ´s" }} />
+        <Stack.Screen name="Series" component={Series} options={{ title: "Marvel App - Series" }} />
+        <Stack.Screen name="Historia" component={Historia} options={{ title: "Marvel App - História" }} />
+        <Stack.Screen name="Eventos" component={Eventos} options={{ title: "Marvel App - Eventos" }} />
       </Stack.Navigator>
     </NavigationContainer>
   );
-}
+};
 
 export default Login;
