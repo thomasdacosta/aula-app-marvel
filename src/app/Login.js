@@ -62,7 +62,7 @@ const TelaLogin = ({ navigation }) => {
                 onPress={() => ValidateLogin(user, password, navigation, setActivity, setModalVisible, setDescription)} />
       </View>
       <View style={{ marginTop: 10 }}>
-        <ActivityIndicator size="large" animating={activity} />
+        <ActivityIndicator size="large" color="#00ff00" animating={activity} />
       </View>
     </SafeAreaView>
   );

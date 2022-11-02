@@ -13,37 +13,48 @@ const JSON_RETORNO_VAZIO = [
   },
 ];
 
-const MarvelApiClient = async (personagem, ExibirBusca, setActivity, setJsonData, setTotalPersonagens) => {
+const MarvelApiClient = async (parametros) => {
   const url = "http://gateway.marvel.com/v1/public/" +
     "characters?ts=1" +
     "&apikey=f59dbe01285f1d360542b5c47a9516e3" +
     "&hash=0ea6be79e04ac1b0400d65ffc11088f9" +
-    "&nameStartsWith=" + personagem + "&orderBy=name&limit=100";
+    "&nameStartsWith=" + parametros.personagem +
+    "&orderBy=name" +
+    "&limit=100";
 
-  setActivity(true);
+  parametros.activity(true);
   await fetch(url, {
     method: "GET",
   }).then((response) => {
     if (response.status === 200) {
       response.json().then((result) => {
-        if (result.data.results.length === 0)
-          ExibirBusca(JSON_RETORNO_VAZIO, 0, setJsonData, setTotalPersonagens);
-        else
-          ExibirBusca(result.data.results, result.data.results.length, setJsonData, setTotalPersonagens);
+        if (result.data.results.length === 0) {
+          parametros.json = JSON_RETORNO_VAZIO;
+          parametros.qtdPersonagens = 0;
+          parametros.qtdGeralPersonagens = 0;
+        } else {
+          parametros.json = result.data.results;
+          parametros.qtdPersonagens = result.data.count;
+          parametros.qtdGeralPersonagens = result.data.total;
+        }
+
+        ExibirBusca(parametros);
       });
     } else
-      ExibirBusca(JSON_RETORNO_VAZIO, 0, setJsonData, setTotalPersonagens);
-  }).catch(() => ExibirBusca(JSON_RETORNO_VAZIO, 0, setJsonData, setTotalPersonagens));
-  setActivity(false);
+      ExibirBusca(JSON_RETORNO_VAZIO, 0, parametros.jsonData, parametros.totalPersonagens);
+  }).catch(() => ExibirBusca(JSON_RETORNO_VAZIO, 0, parametros.jsonData, parametros.totalPersonagens));
+  parametros.activity(false);
 };
 
-const ExibirBusca = (json, total, setJsonData, setTotalPersonagens) => {
-  setJsonData(json);
-  setTotalPersonagens(total);
+const ExibirBusca = (parametros) => {
+  parametros.jsonData(parametros.json);
+  parametros.totalPersonagens(parametros.qtdPersonagens);
+  parametros.totalGeralPersonagens(parametros.qtdGeralPersonagens);
 };
 
-export default (personagem, setTotalPersonagens, setJsonData, setActivity) => {
-  setTotalPersonagens(0);
-  setJsonData(null);
-  MarvelApiClient(personagem, ExibirBusca, setActivity, setJsonData, setTotalPersonagens).then(() => {});
+export default (parametros) => {
+  parametros.jsonData(null);
+  parametros.totalPersonagens(0);
+  parametros.totalGeralPersonagens(0);
+  MarvelApiClient(parametros).then(() => {});
 };

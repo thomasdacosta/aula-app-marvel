@@ -4,7 +4,8 @@ export default StyleSheet.create({
   safeAreaView: {
     flex: 1,
     justifyContent: 'center',
-    backgroundColor: '#191970',
+    // backgroundColor: '#191970',
+    backgroundColor: '#000000',
     padding: 20,
   },
   personagemParagraph: {
@@ -33,9 +34,9 @@ export default StyleSheet.create({
     marginHorizontal: 20,
     paddingHorizontal: 10,
     alignSelf: 'center',
-    borderColor: 'black',
+    borderColor: 'red',
     borderWidth: 2,
-    borderRadius: 10
+    borderRadius: 0
   },
   button: {
     backgroundColor: 'grey',

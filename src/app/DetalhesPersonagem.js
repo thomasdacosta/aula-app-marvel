@@ -19,8 +19,9 @@ const App = ({ route, navigation }) => {
               else if (tipo === "comiclink")
                 tipo = "HQ´s Site"
 
+              let a = index;
               return (
-                <View>
+                <View key={index}>
                   <Text style={Estilos.detalheDescricaoPersonagemAmarelo}>{tipo}</Text>
                   <Pressable onPress={() => Linking.openURL(e.url)}>
                     <Text style={Estilos.linkPersonagem}>{e.url}</Text>

@@ -15,11 +15,21 @@ const App = ({ navigation }) => {
   const [modalVisible, setModalVisible] = useState(false);
   const [item, setItem] = useState(null);
 
+  let parametros = {
+    personagem: personagem,
+    totalPersonagens: setTotalPersonagens,
+    totalGeralPersonagens: setTotalGeralPersonagens,
+    jsonData: setJsonData,
+    activity: setActivity
+  }
+
   // Evento é executado somente quando a tela é carregada
   useEffect(() => {
     //console.warn("Evento é executado somente quando a tela é carregada");
     setPersonagem(PERSONAGEM_DEFAULT);
-    BuscarPersonagem(personagem, setTotalPersonagens, setJsonData, setActivity);
+
+    BuscarPersonagem(parametros);
+    // BuscarPersonagem(personagem, setTotalPersonagens, setJsonData, setActivity);
   }, []);
 
   // Evento é executado somente quando a tela é carregada
@@ -97,15 +107,17 @@ const App = ({ navigation }) => {
       clearButtonMode="always"
       placeholder={"Ex: " + PERSONAGEM_DEFAULT}
       onChangeText={(value) => setPersonagem(value)}
-      onEndEditing={() => BuscarPersonagem(personagem, setTotalPersonagens, setJsonData, setActivity)}
+      onEndEditing={() => {
+        BuscarPersonagem(parametros);
+      }}
     />
     <View style={Estilos.button}>
       <Button title="Pesquisar" onPress={() => {
-        BuscarPersonagem(personagem, setTotalPersonagens, setJsonData, setActivity);
+        BuscarPersonagem(parametros);
       }} />
     </View>
     <View style={{ marginTop: 10 }}>
-      <ActivityIndicator size="large" animating={activity} />
+      <ActivityIndicator size="large" color="#00ff00" animating={activity} />
     </View>
     <Text style={Estilos.personagem}>{totalPersonagens} de {totalGeralPersonagens} Personagens Encontrados</Text>
     <FlatList

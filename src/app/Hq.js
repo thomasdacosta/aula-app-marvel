@@ -23,6 +23,7 @@ const App = ({ route, navigation }) => {
     "?ts=1" +
     "&apikey=f59dbe01285f1d360542b5c47a9516e3" +
     "&hash=0ea6be79e04ac1b0400d65ffc11088f9" +
+    "&limit=100" +
     "&orderBy=-onsaleDate";
 
   const MarvelApiClient = async (url, exibir) => {
@@ -93,7 +94,7 @@ const App = ({ route, navigation }) => {
     <SafeAreaView style={Estilos.safeAreaView}>
       <Text style={Estilos.detalhePersonagem}>HQ´s do {item.name}</Text>
       <View style={{ marginTop: 10 }}>
-        <ActivityIndicator size="large" animating={activity} />
+        <ActivityIndicator size="large" color="#00ff00" animating={activity} />
       </View>
       <Text style={Estilos.personagem}>{totalHq} de {totalGeralHq} HQ´s Encontradas</Text>
       <FlatList
