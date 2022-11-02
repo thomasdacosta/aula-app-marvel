@@ -1,4 +1,4 @@
-export const PERSONAGEM_DEFAULT = "wolverine";
+export const PERSONAGEM_DEFAULT = "iron man";
 
 const JSON_RETORNO_VAZIO = [
   {
