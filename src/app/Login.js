@@ -93,7 +93,7 @@ const Login = () => {
         <Stack.Screen name="Login" component={TelaLogin} options={{ title: "Marvel App - Login" }} />
         <Stack.Screen name="Personagem" component={ListaPersonagem} options={
           {
-            title: "Marvel Login - Personagens",
+            title: "Marvel App - Personagens",
             headerBackVisible: false,
           }
         }
@@ -101,9 +101,9 @@ const Login = () => {
         <Stack.Screen name="DetalhesPersonagem" component={DetalhesPersonagem}
                       options={{ title: "Marvel App - Detalhes" }} />
         <Stack.Screen name="HQ" component={Hq} options={{ title: "Marvel App - HQ´s" }} />
-        <Stack.Screen name="Series" component={Series} options={{ title: "Marvel App - Series" }} />
-        <Stack.Screen name="Historia" component={Historia} options={{ title: "Marvel App - História" }} />
-        <Stack.Screen name="Eventos" component={Eventos} options={{ title: "Marvel App - Eventos" }} />
+        {/*<Stack.Screen name="Series" component={Series} options={{ title: "Marvel App - Series" }} />*/}
+        {/*<Stack.Screen name="Historia" component={Historia} options={{ title: "Marvel App - História" }} />*/}
+        {/*<Stack.Screen name="Eventos" component={Eventos} options={{ title: "Marvel App - Eventos" }} />*/}
       </Stack.Navigator>
     </NavigationContainer>
   );
