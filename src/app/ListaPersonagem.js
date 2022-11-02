@@ -110,11 +110,11 @@ const App = ({ navigation }) => {
         BuscarPersonagem(parametros);
       }}
     />
-    <View style={Estilos.button}>
-      <Button title="Pesquisar" onPress={() => {
-        BuscarPersonagem(parametros);
-      }} color="red" />
-    </View>
+    {/*<View style={Estilos.button}>*/}
+    {/*  <Button title="Pesquisar" onPress={() => {*/}
+    {/*    BuscarPersonagem(parametros);*/}
+    {/*  }} color="red" />*/}
+    {/*</View>*/}
     <View style={{ marginTop: 10 }}>
       <ActivityIndicator size="large" color="#00ff00" animating={activity} />
     </View>
