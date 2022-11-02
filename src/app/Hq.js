@@ -11,7 +11,7 @@ import Estilos from "../estilos/Estilos";
 import React, { useEffect, useState } from "react";
 import MarvelApiClient from "../js/HqService";
 
-const App = ({ route, navigation }) => {
+const App = ({ route }) => {
   const { item } = route.params;
   const [jsonData, setJsonData] = useState("");
   const [activity, setActivity] = useState(false);
