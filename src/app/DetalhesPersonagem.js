@@ -63,7 +63,7 @@ const App = ({ route, navigation }) => {
             navigation.navigate("HQ", {
               item: item,
             });
-          }} disabled={item.comics.items.length <= 0} />
+          }} disabled={item.comics.items.length <= 0} color="red" />
           {/*<View style={{ flex: 0.1 }} />*/}
           {/*<Button style={Estilos.button} title="Series" onPress={() => {*/}
           {/*  navigation.navigate("Series", {*/}

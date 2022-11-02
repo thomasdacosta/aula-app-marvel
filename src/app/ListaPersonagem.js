@@ -5,6 +5,7 @@ import {
 import Estilos from "../estilos/Estilos";
 import DetalhesPersonagem from "./DetalhesPersonagem";
 import BuscarPersonagem, { PERSONAGEM_DEFAULT } from "../js/ListaPersonagemService";
+import { desabilitarBotaoBackAndroid } from "../js/Common";
 
 const App = ({ navigation }) => {
   const [jsonData, setJsonData] = useState("");
@@ -34,8 +35,7 @@ const App = ({ navigation }) => {
 
   // Evento é executado somente quando a tela é carregada
   useEffect(() => {
-    const backHandler = BackHandler.addEventListener("hardwareBackPress", () => true);
-    return () => backHandler.remove();
+    return desabilitarBotaoBackAndroid();
   }, []);
 
   // Sempre acionado quando a tela é renderizada
@@ -66,8 +66,10 @@ const App = ({ navigation }) => {
   const PersonagemItem = ({ item }) => (<Personagem
     item={item}
     evento={() => {
-      setItem(item);
-      setModalVisible(true);
+      if (totalGeralPersonagens != 0) {
+        setItem(item);
+        setModalVisible(true);
+      }
     }}
     link={item.thumbnail.path + "/portrait_uncanny.jpg"} />);
 
@@ -87,9 +89,9 @@ const App = ({ navigation }) => {
               navigation.navigate("DetalhesPersonagem", {
                 item: item,
               });
-            }} title="Detalhes" />
+            }} title="Detalhes" color="red" disabled={totalGeralPersonagens == 0} />
             <View style={{ flex: 0.1 }} />
-            <Button onPress={() => setModalVisible(!modalVisible)} title="Fechar" />
+            <Button onPress={() => setModalVisible(!modalVisible)} title="Fechar" color="red" />
           </View>
         </View>
       </View>
@@ -111,7 +113,7 @@ const App = ({ navigation }) => {
     <View style={Estilos.button}>
       <Button title="Pesquisar" onPress={() => {
         BuscarPersonagem(parametros);
-      }} />
+      }} color="red" />
     </View>
     <View style={{ marginTop: 10 }}>
       <ActivityIndicator size="large" color="#00ff00" animating={activity} />
