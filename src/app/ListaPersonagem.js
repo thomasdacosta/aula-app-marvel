@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import {
-  SafeAreaView, Text, TextInput, View, FlatList, Button, ActivityIndicator, Pressable, Image, BackHandler, Modal
+  SafeAreaView, Text, TextInput, View, FlatList, Button, ActivityIndicator, Pressable, Image, Modal
 } from "react-native";
 import Estilos from "../estilos/Estilos";
 import DetalhesPersonagem from "./DetalhesPersonagem";
@@ -66,7 +66,7 @@ const App = ({ navigation }) => {
   const PersonagemItem = ({ item }) => (<Personagem
     item={item}
     evento={() => {
-      if (totalGeralPersonagens != 0) {
+      if (totalGeralPersonagens !== 0) {
         setItem(item);
         setModalVisible(true);
       }
@@ -89,7 +89,7 @@ const App = ({ navigation }) => {
               navigation.navigate("DetalhesPersonagem", {
                 item: item,
               });
-            }} title="Detalhes" color="red" disabled={totalGeralPersonagens == 0} />
+            }} title="Detalhes" color="red" disabled={totalGeralPersonagens === 0} />
             <View style={{ flex: 0.1 }} />
             <Button onPress={() => setModalVisible(!modalVisible)} title="Fechar" color="red" />
           </View>

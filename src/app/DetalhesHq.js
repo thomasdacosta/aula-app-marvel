@@ -1,10 +1,9 @@
 import React from "react";
-import { Button, Image, Linking, Pressable, SafeAreaView, ScrollView, Text, View } from "react-native";
+import { Image, SafeAreaView, ScrollView, Text, View } from "react-native";
 import Estilos from "../estilos/Estilos";
-import { capitalizeFirstLetter } from "../js/Common";
 import ListarUrls from "../componentes/ListarUrls";
 
-const App = ({ route, navigation }) => {
+const App = ({ route }) => {
   const { item } = route.params;
 
   let data = new Date(Date.parse(item?.modified));
