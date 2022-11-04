@@ -64,24 +64,6 @@ const App = ({ route, navigation }) => {
               item: item,
             });
           }} disabled={item.comics.items.length <= 0} color="red" />
-          {/*<View style={{ flex: 0.1 }} />*/}
-          {/*<Button style={Estilos.button} title="Series" onPress={() => {*/}
-          {/*  navigation.navigate("Series", {*/}
-          {/*    item: item,*/}
-          {/*  });*/}
-          {/*}} disabled={item.series.items.length <= 0} />*/}
-          {/*<View style={{ flex: 0.1 }} />*/}
-          {/*<Button style={Estilos.button} title="História" onPress={() => {*/}
-          {/*  navigation.navigate("Historia", {*/}
-          {/*    item: item,*/}
-          {/*  });*/}
-          {/*}} disabled={item.stories.items.length <= 0} />*/}
-          {/*<View style={{ flex: 0.1 }} />*/}
-          {/*<Button style={Estilos.button} title="Eventos" onPress={() => {*/}
-          {/*  navigation.navigate("Eventos", {*/}
-          {/*    item: item,*/}
-          {/*  });*/}
-          {/*}} disabled={item.events.items.length <= 0} />*/}
         </View>
         <View><Text></Text></View>
         <View style={Estilos.linha} />
