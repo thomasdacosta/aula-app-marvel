@@ -7,6 +7,7 @@ import ListaPersonagem from "./src/app/ListaPersonagem";
 import DetalhesPersonagem from "./src/app/DetalhesPersonagem";
 import Hq from "./src/app/Hq";
 import Login from "./src/app/Login";
+import Sobre from "./src/app/Sobre";
 
 const Stack = createNativeStackNavigator();
 
@@ -36,15 +37,15 @@ const FadeInView = (props) => {
 };
 
 const Main = ({navigation}) => (
-  <View style={styles.container}>
+  <View style={Estilos.appContainer}>
     <ImageBackground source={require("./src/imagens/background.jpg")}
-                     resizeMode="cover" style={styles.image} imageStyle={{opacity: 0.3}}>
-      <FadeInView style={{ width: 250, height: 50, backgroundColor: "powderblue", alignSelf: "center" }}>
+                     resizeMode="cover" style={Estilos.appImage} imageStyle={{opacity: 0.3}}>
+      <FadeInView style={Estilos.appFadein}>
         <Image style={Estilos.logo} source={require("./src/imagens/marvelLogo.png")} />
         <View><Text></Text></View>
         <Button title="Entrar" onPress={() => navigation.navigate("Login")} color="red" />
         <View><Text></Text></View>
-        <Button title="Sobre" onPress={() => navigation.navigate("Login")} color="black" />
+        <Button title="Sobre" onPress={() => navigation.navigate("Sobre")} color="black" />
       </FadeInView>
     </ImageBackground>
   </View>
@@ -72,25 +73,7 @@ export default () => (
       <Stack.Screen name="DetalhesPersonagem" component={DetalhesPersonagem}
                     options={{ title: "Marvel App - Detalhes" }} />
       <Stack.Screen name="HQ" component={Hq} options={{ title: "Marvel App - HQ´s" }} />
+      <Stack.Screen name="Sobre" component={Sobre} options={{ title: "Marvel App - Sobre" }} />
     </Stack.Navigator>
   </NavigationContainer>
-)
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
-  image: {
-    flex: 1,
-    justifyContent: "center",
-    backgroundColor: 'black'
-  },
-  text: {
-    color: "white",
-    fontSize: 42,
-    lineHeight: 84,
-    fontWeight: "bold",
-    textAlign: "center",
-    backgroundColor: "#000000c0",
-  },
-});
+);

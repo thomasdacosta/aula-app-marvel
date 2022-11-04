@@ -132,5 +132,26 @@ export default StyleSheet.create({
     flex: 1,
     height: 1,
     backgroundColor: 'white'
-  }
+  },
+  appContainer: {
+    flex: 1,
+  },
+  appImage: {
+    flex: 1,
+    justifyContent: "center",
+    backgroundColor: 'black'
+  },
+  appFadein: {
+    width: 250,
+    height: 50,
+    //backgroundColor: "powderblue",
+    alignSelf: "center"
+  },
+  sobreText: {
+    color: 'white',
+    marginTop: 10,
+    fontSize: 15,
+    fontWeight: 'bold',
+    textAlign: 'center',
+  },
 });
