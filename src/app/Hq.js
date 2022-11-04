@@ -11,7 +11,7 @@ import Estilos from "../estilos/Estilos";
 import React, { useEffect, useState } from "react";
 import MarvelApiClient from "../js/HqService";
 
-const App = ({ route }) => {
+const App = ({ route, navigation }) => {
   const { item } = route.params;
   const [jsonData, setJsonData] = useState("");
   const [activity, setActivity] = useState(false);
@@ -50,8 +50,9 @@ const App = ({ route }) => {
   const HqPersonagemItem = ({ item }) => (
     <Hq
       item={item}
-      evento={() => {
-      }}
+      evento={() => { navigation.navigate("DetalhesHq", {
+        item: item
+      }) }}
       link={item?.thumbnail?.path + "/portrait_uncanny.jpg"} />
   );
 

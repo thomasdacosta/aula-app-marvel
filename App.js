@@ -8,6 +8,7 @@ import DetalhesPersonagem from "./src/app/DetalhesPersonagem";
 import Hq from "./src/app/Hq";
 import Login from "./src/app/Login";
 import Sobre from "./src/app/Sobre";
+import DetalhesHq from "./src/app/DetalhesHq";
 
 const Stack = createNativeStackNavigator();
 
@@ -73,6 +74,7 @@ export default () => (
       <Stack.Screen name="DetalhesPersonagem" component={DetalhesPersonagem}
                     options={{ title: "Marvel App - Detalhes" }} />
       <Stack.Screen name="HQ" component={Hq} options={{ title: "Marvel App - HQ´s" }} />
+      <Stack.Screen name="DetalhesHq" component={DetalhesHq} options={{ title: "Marvel App - HQ´s" }} />
       <Stack.Screen name="Sobre" component={Sobre} options={{ title: "Marvel App - Sobre" }} />
     </Stack.Navigator>
   </NavigationContainer>
