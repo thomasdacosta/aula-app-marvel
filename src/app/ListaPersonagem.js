@@ -82,7 +82,7 @@ const App = ({ navigation }) => {
         <View style={Estilos.modalView}>
           <Text style={Estilos.modalTextTitle}>{item?.name}</Text>
           <Text
-            style={Estilos.modalText}>{item?.description === "" ? "Personagem sem descrição" : item?.description}</Text>
+            style={Estilos.modalText}>{item?.description === "" ? item?.name : item?.description}</Text>
           <View style={Estilos.alignVertical}>
             <Button style={Estilos.button} onPress={() => {
               setModalVisible(!modalVisible);
@@ -110,11 +110,6 @@ const App = ({ navigation }) => {
         BuscarPersonagem(parametros);
       }}
     />
-    {/*<View style={Estilos.button}>*/}
-    {/*  <Button title="Pesquisar" onPress={() => {*/}
-    {/*    BuscarPersonagem(parametros);*/}
-    {/*  }} color="red" />*/}
-    {/*</View>*/}
     <View style={{ marginTop: 10 }}>
       <ActivityIndicator size="large" color="#00ff00" animating={activity} />
     </View>

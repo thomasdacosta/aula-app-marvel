@@ -113,7 +113,7 @@ export default StyleSheet.create({
   detalheDescricaoPersonagemAmarelo: {
     color: 'yellow',
     marginTop: 10,
-    fontSize: 15,
+    fontSize: 20,
     fontWeight: 'bold',
     textAlign: 'justify',
   },

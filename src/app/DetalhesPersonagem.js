@@ -70,7 +70,7 @@ const App = ({ route, navigation }) => {
         <Text
           style={Estilos.detalheDescricaoPersonagemAmarelo}>Descrição: </Text>
         <Text
-          style={Estilos.detalheDescricaoPersonagem}>{item?.description === "" ? "Personagem sem descrição" : item?.description}</Text>
+          style={Estilos.detalheDescricaoPersonagem}>{item?.description === "" ? item?.name : item?.description}</Text>
         <View><Text></Text></View>
         <View style={Estilos.linha} />
         <Text style={Estilos.detalheDescricaoPersonagemAmarelo}>Data de Modificação:</Text>
